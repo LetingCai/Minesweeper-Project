@@ -4,14 +4,16 @@ public class Tile {
     private boolean shown;
     private static int numBombs;
     public Tile(){
-
+        bomb = false;
+        shown = false;
+        flag = false;
     }
 
     public void setNumBombs(int num){
         numBombs = num;
     }
 
-    private void generateBomb(){
+    public void generateBomb(){
 
         bomb = true;
     }
