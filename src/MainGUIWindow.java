@@ -14,14 +14,16 @@ public class MainGUIWindow extends JFrame implements ActionListener {
         setTitle("Totally Functional Minesweeper Game"); //Name the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close frame on exit.
         setVisible(true); //Show frame.
-        setResizable(true);
+        setResizable(false);
+        setLayout(new BorderLayout());
         setSize(500,500);
         ImageIcon logo = new ImageIcon("bomb.png"); //Create image icon for the logo
-        setIconImage(logo.getImage()); //Change the icon of the frame
         getContentPane().setBackground(new Color(192, 192, 192)); //set frame color.
+        setIconImage(logo.getImage()); //Change the icon of the frame
 
         //Adding text to base frame for difficulty selections
         JLabel startingScreen = new JLabel("Select Difficulty:");
+        startingScreen.setSize(200,200);
         startingScreen.setHorizontalAlignment(JLabel.CENTER);
         startingScreen.setVerticalAlignment(JLabel.CENTER);
 
@@ -31,19 +33,29 @@ public class MainGUIWindow extends JFrame implements ActionListener {
         JButton hardMode = new JButton("Hard");
 
         //Button Settings
-        easyMode.setBounds(JButton.BOTTOM,JButton.BOTTOM,100, 100);
         easyMode.setFocusable(false);
-        mediumMode.setBounds(JButton.TOP,200,100,100);
-        hardMode.setBounds(100,JButton.TOP,100,100);
+        easyMode.setSize(50,100);
+        easyMode.addActionListener(e->new Grid(1));
+        mediumMode.setFocusable(false);
+        mediumMode.setSize(50,100);
+        mediumMode.addActionListener(e -> new Grid(2));
+        hardMode.setFocusable(false);
+        hardMode.setSize(50,100);
+        hardMode.addActionListener(e-> new Grid(3));
 
+        //JPanel to group all the buttons
+        JPanel selectDifficulty = new JPanel();
+        selectDifficulty.setLayout(new GridLayout(3,1));
+        selectDifficulty.setBackground(getBackground());
+        selectDifficulty.add(easyMode);
+        selectDifficulty.add(mediumMode);
+        selectDifficulty.add(hardMode);
 
 
         //Adding everything to frame.
-        add(startingScreen);
-        add(easyMode);
-        add(mediumMode);
-        add(hardMode);
-
+        add(startingScreen,BorderLayout.NORTH);
+        add(selectDifficulty,BorderLayout.CENTER);
+        revalidate();
     }
 
     @Override

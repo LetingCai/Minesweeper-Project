@@ -6,17 +6,16 @@ public class Grid {
         switch (difficulty) {
             case 1 -> {
                 map = new Tile[8][8]; // 8 by 8 grid
-                fillGrid();
             }
             case 2 -> {
                 map = new Tile[13][15]; // 13 by 15 grid
-                fillGrid();
             }
             case 3 -> {
                 map = new Tile[16][30]; // 16 by 30 grid
-                fillGrid();
             }
         }
+        fillGrid();
+
     }
 
     private void fillGrid(){
