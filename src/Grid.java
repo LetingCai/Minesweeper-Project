@@ -15,12 +15,11 @@ public class Grid {
             }
         }
         fillGrid();
-
     }
 
     private void fillGrid(){
         for (int row = 0; row < map.length; row++){
-            for (int col = 0; col < map[0].length; row++){
+            for (int col = 0; col < map[0].length; col++){
                 map[row][col] = new Tile();
             }
         }
