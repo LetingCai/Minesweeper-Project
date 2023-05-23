@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Grid {
-    private Tile[][] map;
+    public static Tile[][] map;
     public Grid(int difficulty){
         switch (difficulty) {
             case 1 -> {
