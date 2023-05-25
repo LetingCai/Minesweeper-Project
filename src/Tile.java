@@ -1,17 +1,29 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
-public class Tile extends JButton{
+public class Tile extends JFrame implements MouseListener{
     private boolean flag;
     private boolean bomb;
     private boolean shown;
     private static int numBombs;
     private int nearbyBombs;
+    private final JLabel label;
+
     public Tile(){
-        add(new JButton());
-        
+        ImageIcon tiles = new ImageIcon("tile.png");
+        label = new JLabel();
+        label.setIcon(new ImageIcon(getScaledImage(tiles.getImage(),30,30)));
+        label.setOpaque(true);
+        label.addMouseListener(this);
+        Grid.board.add(label);
+
+        revalidate();
     }
 
-    public void setNumBombs(int num) {
+    public static void setNumBombs(int num) {
         numBombs = num;
     }
 
@@ -27,7 +39,7 @@ public class Tile extends JButton{
         }
     }
 
-    public void show() {
+    public void showTile() {
         if (!flag) {
             if (bomb) {
                 System.exit(0);
@@ -37,7 +49,7 @@ public class Tile extends JButton{
         }
     }
 
-    public void flag() {
+    public void flagTile() {
         if (!shown && !flag) {
             numBombs--;
             flag = true;
@@ -56,5 +68,52 @@ public class Tile extends JButton{
                 }
             }
         }
+    }
+
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
+    }
+
+    public static int getNumBombs(){
+        return numBombs;
+    }
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON3){ //Right Click
+            System.out.println("Right Click?");
+        }
+        if (e.getButton() == MouseEvent.BUTTON1){ //Left Click
+            label.removeMouseListener(this);
+            System.out.println("Left Click?");
+        }
+        if (e.getButton() == MouseEvent.BUTTON2){
+            System.out.println("Middle Click?"); //Middle Click
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }
