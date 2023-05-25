@@ -46,12 +46,12 @@ public class Tile extends JFrame implements MouseListener{
                 System.exit(0);
             } else {
                 shown = true;
+                label.setText(String.valueOf(nearbyBombs));
+                label.setHorizontalTextPosition(JLabel.CENTER);
+                label.setVerticalTextPosition(JLabel.CENTER);
+                revalidate();
             }
         }
-        label.setText(String.valueOf(nearbyBombs));
-        label.setHorizontalTextPosition(JLabel.CENTER);
-        label.setVerticalTextPosition(JLabel.CENTER);
-        revalidate();
     }
 
     public void flagTile() {
