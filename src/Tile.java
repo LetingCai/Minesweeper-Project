@@ -49,6 +49,7 @@ public class Tile extends JFrame implements MouseListener{
                 label.setText(String.valueOf(nearbyBombs));
                 label.setHorizontalTextPosition(JLabel.CENTER);
                 label.setVerticalTextPosition(JLabel.CENTER);
+                label.removeMouseListener(this);
                 revalidate();
             }
         }
@@ -60,7 +61,7 @@ public class Tile extends JFrame implements MouseListener{
             flag = true;
             ImageIcon flag = new ImageIcon("flag.png");
             label.setIcon(new ImageIcon(getScaledImage(flag.getImage(),30,30)));
-        } else if (!shown && flag){
+        } else if (!shown){
             numBombs++;
             flag = false;
             ImageIcon tiles = new ImageIcon("tile.png");
@@ -112,7 +113,6 @@ public class Tile extends JFrame implements MouseListener{
                 bomb = false;
             }
             showTile();
-            label.removeMouseListener(this);
             System.out.println("Left Click?");
         }
         if (e.getButton() == MouseEvent.BUTTON2){
