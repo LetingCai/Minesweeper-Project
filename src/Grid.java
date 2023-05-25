@@ -1,16 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 
-public class Grid extends JFrame implements MouseListener {
+public class Grid extends JFrame{
     public static Tile[][] map;
+    public static JPanel board = new JPanel();
     public Grid(int difficulty){
         switch (difficulty) {
-            case 1 -> map = new Tile[8][8]; // 8 by 8 grid
-            case 2 -> map = new Tile[13][15]; // 13 by 15 grid
-            case 3 -> map = new Tile[16][30]; // 16 by 30 grid
+            case 1 -> {
+                map = new Tile[8][8];
+                board.setLayout(new GridLayout(8,8));
+                Tile.setNumBombs(10);
+            }// 8 by 8 grid
+            case 2 -> {
+                map = new Tile[13][15];
+                board.setLayout(new GridLayout(13,15));
+                Tile.setNumBombs(40);
+            } // 13 by 15 grid
+            case 3 -> {
+                map = new Tile[16][30];
+                board.setLayout(new GridLayout(16,30));
+                Tile.setNumBombs(99);
+            } // 16 by 30 grid
         }
         fillGrid();
         generateFrame();
@@ -37,34 +49,34 @@ public class Grid extends JFrame implements MouseListener {
         setVisible(true); //Show frame.
         setResizable(false);
         setLayout(new BorderLayout());
-        setSize(500,500);
+        setSize(map[0].length*30,map.length*30 + 50);
         ImageIcon logo = new ImageIcon("bomb.png"); //Create image icon for the logo
         getContentPane().setBackground(new Color(192, 192, 192)); //set frame color.
         setIconImage(logo.getImage()); //Change the icon of the frame
-    }
-    //Mouse Action Key Listeners:
-    @Override
-    public void mouseClicked(MouseEvent e) {
 
-    }
+        //Add a status bar showing the number of flags placed.
+        JLabel statusBar = new JLabel(String.valueOf(Tile.getNumBombs()));
+        ImageIcon img = new ImageIcon("flag.png");
+        statusBar.setIcon(new ImageIcon(getScaledImage(img.getImage(),40,40)));
+        statusBar.setFont(new Font("Arial", Font.PLAIN, 30));
+        statusBar.setHorizontalAlignment(JLabel.CENTER);
+        add(statusBar,BorderLayout.NORTH);
 
-    @Override
-    public void mousePressed(MouseEvent e) {
+        board.setBackground(new Color(192, 192, 192));
+        add(board,BorderLayout.CENTER);
 
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
+        revalidate();
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
 
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }

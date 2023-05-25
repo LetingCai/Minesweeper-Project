@@ -35,13 +35,10 @@ public class MainGUIWindow extends JFrame implements ActionListener {
 
         //Button Settings
         easyMode.setFocusable(false);
-        easyMode.setSize(50,100);
         easyMode.addActionListener(e -> {new Grid(1);dispose();});
         mediumMode.setFocusable(false);
-        mediumMode.setSize(50,100);
         mediumMode.addActionListener(e -> {new Grid(2);dispose();});
         hardMode.setFocusable(false);
-        hardMode.setSize(50,100);
         hardMode.addActionListener(e -> {new Grid(3);dispose();});
 
         //JPanel to group all the buttons
@@ -50,6 +47,7 @@ public class MainGUIWindow extends JFrame implements ActionListener {
         selectDifficulty.add(easyMode);
         selectDifficulty.add(mediumMode);
         selectDifficulty.add(hardMode);
+        selectDifficulty.setSize(100,100);
 
 
         //Adding everything to frame.
