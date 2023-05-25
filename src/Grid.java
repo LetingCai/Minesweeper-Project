@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Grid extends JFrame{
     public static Tile[][] map;
+    public static JLabel statusBar;
     public static JPanel board = new JPanel();
     public Grid(int difficulty){
         switch (difficulty) {
@@ -25,6 +26,7 @@ public class Grid extends JFrame{
             } // 16 by 30 grid
         }
         fillGrid();
+        Tile.number();
         generateFrame();
     }
 
@@ -55,7 +57,7 @@ public class Grid extends JFrame{
         setIconImage(logo.getImage()); //Change the icon of the frame
 
         //Add a status bar showing the number of flags placed.
-        JLabel statusBar = new JLabel(String.valueOf(Tile.getNumBombs()));
+        statusBar = new JLabel(String.valueOf(Tile.getNumBombs()));
         ImageIcon img = new ImageIcon("flag.png");
         statusBar.setIcon(new ImageIcon(getScaledImage(img.getImage(),40,40)));
         statusBar.setFont(new Font("Arial", Font.PLAIN, 30));

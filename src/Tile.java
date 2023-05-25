@@ -8,6 +8,7 @@ public class Tile extends JFrame implements MouseListener{
     private boolean flag;
     private boolean bomb;
     private boolean shown;
+    private static boolean initialized;
     private static int numBombs;
     private int nearbyBombs;
     private final JLabel label;
@@ -47,21 +48,34 @@ public class Tile extends JFrame implements MouseListener{
                 shown = true;
             }
         }
+        label.setText(String.valueOf(nearbyBombs));
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.CENTER);
+        revalidate();
     }
 
     public void flagTile() {
         if (!shown && !flag) {
             numBombs--;
             flag = true;
+            ImageIcon flag = new ImageIcon("flag.png");
+            label.setIcon(new ImageIcon(getScaledImage(flag.getImage(),30,30)));
+        } else if (!shown && flag){
+            numBombs++;
+            flag = false;
+            ImageIcon tiles = new ImageIcon("tile.png");
+            label.setIcon(new ImageIcon(getScaledImage(tiles.getImage(),30,30)));
         }
+        Grid.statusBar.setText(String.valueOf(numBombs));
+        revalidate();
     }
 
-    public void number() {
+    public static void number() {
         for (int row = 0; row < Grid.map.length; row++) {
             for (int col = 0; col < Grid.map[0].length; col++) {
                 for (int i = row - 1; i <= row + 1; i++) {
                     for (int j = col - 1; j <= col + 1; j++) {
-                        if (i > 0 && i < Grid.map.length - 1 && j > 0 && j < Grid.map[0].length - 1 && Grid.map[i][j].bomb) {
+                        if (i >= 0 && i < Grid.map.length && j >= 0 && j < Grid.map[0].length && Grid.map[i][j].bomb) {
                             Grid.map[row][col].nearbyBombs++;
                         }
                     }
@@ -90,8 +104,14 @@ public class Tile extends JFrame implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3){ //Right Click
             System.out.println("Right Click?");
+            flagTile();
         }
         if (e.getButton() == MouseEvent.BUTTON1){ //Left Click
+            if (!initialized){
+                initialized = true;
+                bomb = false;
+            }
+            showTile();
             label.removeMouseListener(this);
             System.out.println("Left Click?");
         }
