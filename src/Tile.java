@@ -16,7 +16,7 @@ public class Tile extends JFrame implements MouseListener{
     public Tile(){
         ImageIcon tiles = new ImageIcon("tile.png");
         label = new JLabel();
-        label.setIcon(new ImageIcon(getScaledImage(tiles.getImage(),30,30)));
+        label.setIcon(new ImageIcon(getScaledImage(tiles.getImage())));
         label.setOpaque(true);
         label.addMouseListener(this);
         Grid.board.add(label);
@@ -60,12 +60,12 @@ public class Tile extends JFrame implements MouseListener{
             numBombs--;
             flag = true;
             ImageIcon flag = new ImageIcon("flag.png");
-            label.setIcon(new ImageIcon(getScaledImage(flag.getImage(),30,30)));
+            label.setIcon(new ImageIcon(getScaledImage(flag.getImage())));
         } else if (!shown){
             numBombs++;
             flag = false;
             ImageIcon tiles = new ImageIcon("tile.png");
-            label.setIcon(new ImageIcon(getScaledImage(tiles.getImage(),30,30)));
+            label.setIcon(new ImageIcon(getScaledImage(tiles.getImage())));
         }
         Grid.statusBar.setText(String.valueOf(numBombs));
         revalidate();
@@ -85,12 +85,12 @@ public class Tile extends JFrame implements MouseListener{
         }
     }
 
-    private Image getScaledImage(Image srcImg, int w, int h){
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    private Image getScaledImage(Image srcImg){
+        BufferedImage resizedImg = new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
 
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.drawImage(srcImg, 0, 0, 30, 30, null);
         g2.dispose();
 
         return resizedImg;

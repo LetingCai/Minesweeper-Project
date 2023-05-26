@@ -59,7 +59,7 @@ public class Grid extends JFrame{
         //Add a status bar showing the number of flags placed.
         statusBar = new JLabel(String.valueOf(Tile.getNumBombs()));
         ImageIcon img = new ImageIcon("flag.png");
-        statusBar.setIcon(new ImageIcon(getScaledImage(img.getImage(),40,40)));
+        statusBar.setIcon(new ImageIcon(getScaledImage(img.getImage())));
         statusBar.setFont(new Font("Arial", Font.PLAIN, 30));
         statusBar.setHorizontalAlignment(JLabel.CENTER);
         add(statusBar,BorderLayout.NORTH);
@@ -70,12 +70,12 @@ public class Grid extends JFrame{
         revalidate();
     }
 
-    private Image getScaledImage(Image srcImg, int w, int h){
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    private Image getScaledImage(Image srcImg){
+        BufferedImage resizedImg = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
 
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.drawImage(srcImg, 0, 0, 40, 40, null);
         g2.dispose();
 
         return resizedImg;
