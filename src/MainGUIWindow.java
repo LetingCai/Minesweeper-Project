@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainGUIWindow extends JFrame implements ActionListener {
+public class    MainGUIWindow extends JFrame implements ActionListener {
     public static void main(String[] args){
         new MainGUIWindow();
     }
@@ -35,7 +35,7 @@ public class MainGUIWindow extends JFrame implements ActionListener {
 
         //Button Settings
         easyMode.setFocusable(false);
-        easyMode.addActionListener(e -> {new Grid(1);dispose();});
+        easyMode.addActionListener(e -> {new GameBoard(8,8,10);dispose();});
         mediumMode.setFocusable(false);
         mediumMode.addActionListener(e -> {new Grid(2);dispose();});
         hardMode.setFocusable(false);

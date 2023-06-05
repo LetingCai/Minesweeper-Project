@@ -17,7 +17,6 @@ public class Tile extends JFrame implements MouseListener{
         ImageIcon tiles = new ImageIcon("tile.png");
         label = new JLabel();
         label.setIcon(new ImageIcon(getScaledImage(tiles.getImage())));
-        label.setOpaque(true);
         label.addMouseListener(this);
         Grid.board.add(label);
 
@@ -49,8 +48,26 @@ public class Tile extends JFrame implements MouseListener{
                 label.setText(String.valueOf(nearbyBombs));
                 label.setHorizontalTextPosition(JLabel.CENTER);
                 label.setVerticalTextPosition(JLabel.CENTER);
-                label.removeMouseListener(this);
                 revalidate();
+                if (nearbyBombs == 0) {
+                    clearTile();
+                }
+            }
+        }
+    }
+
+    public void clearTile() {
+        for (int r = 0; r < Grid.map.length; r++) {
+            for (int c = 0; c < Grid.map[0].length; c++) {
+                if (Grid.map[r][c].hashCode() == this.hashCode()) {
+                    for (int i = r - 1; i < r + 2; i++) {
+                        for (int j = c - 1; j < c + 2; j++) {
+                            if (i >= 0 && i < Grid.map.length && j >= 0 && j < Grid.map[0].length && !Grid.map[i][j].shown) {
+                                Grid.map[i][j].showTile();
+                            }
+                        }
+                    }
+                }
             }
         }
     }
