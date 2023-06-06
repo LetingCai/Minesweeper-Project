@@ -6,10 +6,14 @@ import java.awt.image.BufferedImage;
 
 public class GameBoard extends JFrame implements MouseListener {
     //Image Icons for GUI
-    private static final ImageIcon[] img = new ImageIcon[]{new ImageIcon("flag.png"), new ImageIcon("bomb.png"), new ImageIcon("tile.png")};
+    private static final ImageIcon[] img = new ImageIcon[]{new ImageIcon("flag.png"), new ImageIcon("bomb.png"), new ImageIcon("tile.png"), new ImageIcon("empty_tile.png")};
 
     //General Game Board construction parameters
     private final JLabel[][] map;
+    private final boolean[][] bomb;
+    private final boolean[][] flag;
+    private final boolean[][] shown;
+    private final int[][] nearbyBombs;
     private JLabel statusBar;
     private final JPanel board;
     private final int numBombs;
@@ -18,6 +22,10 @@ public class GameBoard extends JFrame implements MouseListener {
 
         //-------------Generates the Minesweeper Game Frame------------//
         map = new JLabel[boardHeight][boardWidth];
+        bomb = new boolean[boardHeight][boardWidth];
+        flag = new boolean[boardHeight][boardWidth];
+        shown = new boolean[boardHeight][boardWidth];
+        nearbyBombs = new int[boardHeight][boardWidth];
         numBombs = numberOfBombs;
         board = new JPanel(new GridLayout(boardHeight,boardWidth));
         fillMap();

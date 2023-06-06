@@ -38,6 +38,42 @@ public class Tile extends JFrame implements MouseListener{
             }
         }
     }
+    public void middleClick() {
+        int row = 0;
+        int col = 0;
+        int numFlag = 0;
+        int numBomb = 0;
+        for (int r = 0; r < Grid.map.length; r++) {
+            for (int c = 0; c < Grid.map[0].length; c++) {
+                if (Grid.map[r][c].hashCode() == this.hashCode()) {
+                    row = r;
+                    col = c;
+                }
+            }
+        }
+        for (int i = row - 1; i < row + 2; i++) {
+            for (int j = col - 1; j < col + 2; j++) {
+                if (i >= 0 && i < Grid.map.length && j >= 0 && j < Grid.map[0].length) {
+                    if (Grid.map[i][j].flag) {
+                        numFlag++;
+                    }
+                    if (Grid.map[i][j].bomb) {
+                        numBomb++;
+                    }
+                }
+            }
+        }
+        if (numFlag == numBomb) {
+            for (int i = row - 1; i < row + 2; i++) {
+                for (int j = col - 1; j < col + 2; j++) {
+                    if (i >= 0 && i < Grid.map.length && j >= 0 && j < Grid.map[0].length) {
+                        Grid.map[i][j].showTile();
+                    }
+                }
+            }
+        }
+
+    }
 
     public void showTile() {
         if (!flag) {
@@ -133,6 +169,9 @@ public class Tile extends JFrame implements MouseListener{
             System.out.println("Left Click?");
         }
         if (e.getButton() == MouseEvent.BUTTON2){
+            if (shown) {
+                middleClick();
+            }
             System.out.println("Middle Click?"); //Middle Click
         }
     }
