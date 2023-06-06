@@ -78,7 +78,7 @@ public class Tile extends JFrame implements MouseListener{
     public void showTile() {
         if (!flag) {
             if (bomb) {
-                System.exit(0);
+                System.out.println("bomb");
             } else {
                 shown = true;
                 label.setText(String.valueOf(nearbyBombs));
