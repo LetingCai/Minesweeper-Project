@@ -14,7 +14,7 @@ public class GameBoard extends JFrame implements MouseListener {
     private final int[][] nearbyBombs;
     private JLabel statusBar;
     private final JPanel board;
-    private final int numBombs;
+    private int numBombs;
     private final int width;
     private final int height;
     private boolean initialized;
@@ -58,10 +58,20 @@ public class GameBoard extends JFrame implements MouseListener {
     private void flagTile(int hashcode){
             int row = getRow(hashcode);
             int col = getCol(hashcode);
-            if (shownFlagNeither[row][col] == 0){
+        switch (shownFlagNeither[row][col]) {
+            case 1 -> {
+                changeTileImage(map[row][col], 11);
+                shownFlagNeither[row][col] = 0;
+                numBombs++;
+                statusBar.setText(String.valueOf(numBombs));
+            }
+            case 0 -> {
                 changeTileImage(map[row][col], 10);
                 shownFlagNeither[row][col] = 1;
+                numBombs--;
+                statusBar.setText(String.valueOf(numBombs));
             }
+        }
     }
 
     public void middleClick(int hashcode){
