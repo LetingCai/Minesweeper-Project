@@ -43,15 +43,26 @@ public class GameBoard extends JFrame implements MouseListener {
         int col = getCol(hashcode);
         int nearbyBombs = this.nearbyBombs[row][col];
         if (!initialized){
-            System.out.println("Initialized program");
+            System.out.println("Initialized");
             initialized = true;
         }
-        if (shownFlagNeither[row][col] == 0){
-            changeTileImage(map[row][col],nearbyBombs);
+
+        if (shownFlagNeither[row][col] == 0) {
+            if (nearbyBombs == 9) {
+                System.out.println("BOOM!");
+            }
+            changeTileImage(map[row][col], nearbyBombs);
             shownFlagNeither[row][col] = 2;
-        }
-        if (nearbyBombs == 9){
-            System.out.println("BOOM!");
+
+            if (nearbyBombs == 0) {
+                for (int i = row - 1; i < row + 2; i++) {
+                    for (int k = col - 1; k < col + 2; k++) {
+                        if (i >= 0 && i < height && k >= 0 && k < width && this.nearbyBombs[i][k] != 9) {
+                            showTile(map[i][k].hashCode());
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -77,19 +88,21 @@ public class GameBoard extends JFrame implements MouseListener {
     public void middleClick(int hashcode){
         int row = getRow(hashcode);
         int col = getCol(hashcode);
-        if (nearbyBombs[row][col] == check3by3(hashcode,shownFlagNeither,1)){
+        if (nearbyBombs[row][col] == check3by3(hashcode,shownFlagNeither,1) && shownFlagNeither[row][col] == 2){
             for (int i = row-1; i < row+2; i++){
                 for (int k = col-1; k<col+2; k++){
-                    if (i >= 0 && i < height && k >= 0 && k < width && nearbyBombs[i][k]!= 9){
+                    if (i >= 0 && i < height && k >= 0 && k < width ){
                         showTile(map[i][k].hashCode());
                     }
                 }
             }
+            System.out.println("Middle Click");
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         if (e.getButton() == MouseEvent.BUTTON1) { //Left Click
             System.out.println("Left Click");
             showTile(e.getSource().hashCode());
@@ -101,8 +114,7 @@ public class GameBoard extends JFrame implements MouseListener {
                 flagTile(e.getSource().hashCode());
             }
 
-            if (e.getButton() == MouseEvent.BUTTON2) {
-                System.out.println("Middle Click"); //Middle Click
+            if (e.getButton() == MouseEvent.BUTTON2) {//Middle Click
                 middleClick(e.getSource().hashCode());
             }
         }

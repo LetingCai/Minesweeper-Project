@@ -39,7 +39,7 @@ public class    MainGUIWindow extends JFrame implements ActionListener {
         mediumMode.setFocusable(false);
         mediumMode.addActionListener(e -> {new Grid(2);dispose();});
         hardMode.setFocusable(false);
-        hardMode.addActionListener(e -> {new Grid(3);dispose();});
+        hardMode.addActionListener(e -> {new GameBoard(30,16,99);dispose();});
 
         //JPanel to group all the buttons
         JPanel selectDifficulty = new JPanel();
