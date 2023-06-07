@@ -6,19 +6,18 @@ import java.awt.image.BufferedImage;
 
 public class GameBoard extends JFrame implements MouseListener {
     //Image Icons for GUI
-    private static final ImageIcon[] img = new ImageIcon[]{new ImageIcon("flag.png"), new ImageIcon("bomb.png"), new ImageIcon("tile.png"), new ImageIcon("empty_tile.png")};
+    private static final ImageIcon[] img = new ImageIcon[]{new ImageIcon("0.png"), new ImageIcon("1.png"), new ImageIcon("2.png"),new ImageIcon("3.png"), new ImageIcon("4.png"), new ImageIcon("5.png"), new ImageIcon("6.png"), new ImageIcon("7.png"), new ImageIcon("8.png"), new ImageIcon("bomb.png"), new ImageIcon("flag.png"),  new ImageIcon("tile.png")};
 
     //General Game Board construction parameters
     private final JLabel[][] map;
-    private final boolean[][] flag;
-    private final boolean[][] shown;
+    private final int[][] shownFlagNeither; // 0 = Neither shown nor flagged; 1 = flagged; 2 = Shown;
     private final int[][] nearbyBombs;
     private JLabel statusBar;
     private final JPanel board;
     private final int numBombs;
     private final int width;
     private final int height;
-    private final boolean initialized;
+    private boolean initialized;
 
     public GameBoard(int boardWidth, int boardHeight, int numberOfBombs){
         width = boardWidth;
@@ -26,8 +25,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
         //-------------Generates the Minesweeper Game Frame------------//
         map = new JLabel[boardHeight][boardWidth];
-        flag = new boolean[boardHeight][boardWidth];
-        shown = new boolean[boardHeight][boardWidth];
+        shownFlagNeither = new int[boardHeight][boardWidth];
         nearbyBombs = new int[boardHeight][boardWidth];
         numBombs = numberOfBombs;
         board = new JPanel(new GridLayout(boardHeight,boardWidth));
@@ -39,44 +37,87 @@ public class GameBoard extends JFrame implements MouseListener {
 
     }
 
+    //---------------------------Active Methods----------------------------//
+    private void showTile(int hashcode){
+        int row = getRow(hashcode);
+        int col = getCol(hashcode);
+        int nearbyBombs = this.nearbyBombs[row][col];
+        if (!initialized){
+            System.out.println("Initialized program");
+            initialized = true;
+        }
+        if (shownFlagNeither[row][col] == 0){
+            changeTileImage(map[row][col],nearbyBombs);
+            shownFlagNeither[row][col] = 2;
+        }
+        if (nearbyBombs == 9){
+            System.out.println("BOOM!");
+        }
+    }
+
+    private void flagTile(int hashcode){
+            int row = getRow(hashcode);
+            int col = getCol(hashcode);
+            if (shownFlagNeither[row][col] == 0){
+                changeTileImage(map[row][col], 10);
+                shownFlagNeither[row][col] = 1;
+            }
+    }
+
+    public void middleClick(int hashcode){
+        int row = getRow(hashcode);
+        int col = getCol(hashcode);
+        if (nearbyBombs[row][col] == check3by3(hashcode,shownFlagNeither,1)){
+            for (int i = row-1; i < row+2; i++){
+                for (int k = col-1; k<col+2; k++){
+                    if (i >= 0 && i < height && k >= 0 && k < width && nearbyBombs[i][k]!= 9){
+                        showTile(map[i][k].hashCode());
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) { //Left Click
+            System.out.println("Left Click");
+            showTile(e.getSource().hashCode());
+        }
 
+        if (initialized){
+            if (e.getButton() == MouseEvent.BUTTON3){ //Right Click
+                System.out.println("Right Click");
+                flagTile(e.getSource().hashCode());
+            }
+
+            if (e.getButton() == MouseEvent.BUTTON2) {
+                System.out.println("Middle Click"); //Middle Click
+                middleClick(e.getSource().hashCode());
+            }
+        }
+        System.out.println("Clicked");
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-
-
 
     //----------------------------------Private Helpers-------------------------------//
+
+    private void changeTileImage(JLabel label, int positionOfImage){
+        label.setIcon( new ImageIcon(getScaledImage(img[positionOfImage].getImage(),30,30)));
+    }
 
     private void fillMap(){
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                map[row][col] = new JLabel(new ImageIcon(getScaledImage(img[2].getImage(), 30, 30)));
+                map[row][col] = new JLabel(new ImageIcon(getScaledImage(img[11].getImage(), 30, 30)));
+                map[row][col].addMouseListener(this);
                 board.add(map[row][col]);
-                flag[row][col] = false;
-                shown[row][col] = false;
-                nearbyBombs[row][col] = 0;
+                shownFlagNeither[row][col] = 0;
+                if (nearbyBombs[row][col]!=9) {
+                    nearbyBombs[row][col] = check3by3(map[row][col].hashCode(),nearbyBombs,9);
+                }
+                map[row][col].setText(String.valueOf(nearbyBombs[row][col]));
+                map[row][col].setHorizontalTextPosition(JLabel.CENTER);
+                map[row][col].setVerticalTextPosition(JLabel.CENTER);
             }
         }
     }
@@ -93,13 +134,13 @@ public class GameBoard extends JFrame implements MouseListener {
         }
     }
 
-    private int check3by3(int hashcode){
+    private int check3by3(int hashcode, int[][] list, int condition){
         int row = getRow(hashcode);
         int col = getCol(hashcode);
         int count = 0;
         for (int i = row-1; i < row+2; i++){
             for (int k = col-1; k<col+2; k++){
-                if (i >= 0 && i<height && k >= 0 && k < width && nearbyBombs[row][col] == 9){
+                if (i >= 0 && i < height && k >= 0 && k < width && list[i][k] == condition){
                     count++;
                 }
             }
@@ -154,7 +195,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
         //Add a status bar showing the number of flags placed.
         statusBar = new JLabel(String.valueOf(numBombs));
-        statusBar.setIcon(new ImageIcon(getScaledImage(img[0].getImage(),40,40)));
+        statusBar.setIcon(new ImageIcon(getScaledImage(img[10].getImage(),40,40)));
         statusBar.setFont(new Font("Arial", Font.PLAIN, 30));
         statusBar.setHorizontalAlignment(JLabel.CENTER);
         add(statusBar, BorderLayout.NORTH);
@@ -165,4 +206,15 @@ public class GameBoard extends JFrame implements MouseListener {
         revalidate();
     }
 
+
+
+    //-------------------------Useless Junk (yet)-------------------//
+    @Override
+    public void mousePressed(MouseEvent e) {}
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
