@@ -13,6 +13,7 @@ public class Tile extends JFrame implements MouseListener{
     private int nearbyBombs;
     private final JLabel label;
 
+
     public Tile(){
         ImageIcon tiles = new ImageIcon("tile.png");
         label = new JLabel();

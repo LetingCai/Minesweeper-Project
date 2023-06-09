@@ -1,21 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
-public class GameBoard extends JFrame implements MouseListener {
+public class GameBoard extends JFrame implements MouseListener, ActionListener {
+    public static void main(String[] args){
+        new GameBoard();
+    }
     //Image Icons for GUI
     private static final ImageIcon[] img = new ImageIcon[]{new ImageIcon("0.png"), new ImageIcon("1.png"), new ImageIcon("2.png"),new ImageIcon("3.png"), new ImageIcon("4.png"), new ImageIcon("5.png"), new ImageIcon("6.png"), new ImageIcon("7.png"), new ImageIcon("8.png"), new ImageIcon("bomb.png"), new ImageIcon("flag.png"),  new ImageIcon("tile.png")};
 
-    //General Game Board construction parameters
+    //General Game Board construction
     private JLabel statusBar;
     private final JPanel board;
     private int numBombs;
-    private final int width;
-    private final int height;
+    private int width;
+    private int height;
     private boolean initialized;
     private int numberOfNonBombs;
+
+    //JButtons:
+    private final JButton easyMode = new JButton("Beginner");
+    private final JButton mediumMode = new JButton("Intermediate");
+    private final JButton hardMode = new JButton("Expert");
 
     //The tiles:
     private final JLabel[][] map;
@@ -23,22 +33,47 @@ public class GameBoard extends JFrame implements MouseListener {
     private final int[][] nearbyBombs;
 
 
-    public GameBoard(int boardWidth, int boardHeight, int numberOfBombs){
-        width = boardWidth;
-        height = boardHeight;
+    public GameBoard(){
+        //Setting up the base frame
+        setTitle("Totally Functional Minesweeper Game"); //Name the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close frame on exit.
+        setVisible(true); //Show frame.
+        setResizable(false);
+        setLayout(new BorderLayout());
+        setSize(500,500);
+        ImageIcon logo = img[9]; //Create image icon for the logo
+        getContentPane().setBackground(new Color(192, 192, 192)); //set frame color.
+        setIconImage(logo.getImage()); //Change the icon of the frame
 
-        //-------------Generates the Minesweeper Game Frame------------//
-        map = new JLabel[boardHeight][boardWidth];
-        shownFlagNeither = new int[boardHeight][boardWidth];
-        nearbyBombs = new int[boardHeight][boardWidth];
-        numBombs = numberOfBombs;
-        board = new JPanel(new GridLayout(boardHeight,boardWidth));
-        initialized = false;
-        numberOfNonBombs = width*height-numberOfBombs;
-        generateBomb(numberOfBombs);
-        fillMap();
-        generateFrame();
-        //-------------------------------------------------------------//
+        //Adding text to base frame for difficulty selections
+        JLabel startingScreen = new JLabel("Select Difficulty:");
+        startingScreen.setFont(new Font("Arial", Font.PLAIN, 30));
+        startingScreen.setPreferredSize(new Dimension(100,100));
+        startingScreen.setHorizontalAlignment(JLabel.CENTER);
+        startingScreen.setVerticalAlignment(JLabel.CENTER);
+
+        //Button Settings
+        easyMode.setFocusable(false);
+        easyMode.addActionListener(e -> {new GameBoard();dispose();});
+        mediumMode.setFocusable(false);
+        mediumMode.addActionListener(e -> {new Grid(2);dispose();});
+        hardMode.setFocusable(false);
+        hardMode.addActionListener(this);
+
+        //JPanel to group all the buttons
+        JPanel selectDifficulty = new JPanel();
+        selectDifficulty.setLayout(new GridLayout(3,1));
+        selectDifficulty.add(easyMode);
+        selectDifficulty.add(mediumMode);
+        selectDifficulty.add(hardMode);
+        selectDifficulty.setSize(100,100);
+
+
+        //Adding everything to frame.
+        add(startingScreen,BorderLayout.NORTH);
+        add(selectDifficulty,BorderLayout.CENTER);
+        repaint();
+        revalidate();
 
     }
 
@@ -54,7 +89,7 @@ public class GameBoard extends JFrame implements MouseListener {
                 System.out.println("BOOM!");
             }
 
-            //changeTileImage(map[row][col], nearbyBombs);
+            changeTileImage(map[row][col], nearbyBombs);
             shownFlagNeither[row][col] = 2;
             numberOfNonBombs--;
 
@@ -69,7 +104,10 @@ public class GameBoard extends JFrame implements MouseListener {
             }
 
             if (numberOfNonBombs == 0){
-                System.out.println("You Won!");
+
+                getContentPane().removeAll();
+                revalidate();
+                repaint();
             }
         }
     }
@@ -88,12 +126,16 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void initialization(int row, int col){
+        System.out.println("Initialized");
         initialized = true;
         int bombs = check3by3(row, col,nearbyBombs, 9);
 
         for (int i = row-1; i < row+2; i++){
             for (int k = col-1; k<col+2; k++){
                 if (i >= 0 && i < height && k >= 0 && k < width){
+                    if (nearbyBombs[i][k] == 9){
+                        nearbyBombs[i][k] = 0;
+                    }
                     showTile(i,k);
                 }
             }
@@ -105,20 +147,13 @@ public class GameBoard extends JFrame implements MouseListener {
             for (int k = 0; k < width; k++) {
                 if (nearbyBombs[i][k] != 9){
                     nearbyBombs[i][k] = check3by3(i,k,nearbyBombs,9);
-                    map[i][k].setText(String.valueOf(nearbyBombs[i][k]));
+                }
+                map[i][k].setText(String.valueOf(nearbyBombs[i][k]));
+                if (shownFlagNeither[i][k] == 2){
+                    changeTileImage(map[i][k],nearbyBombs[i][k]);
                 }
             }
         }
-
-        for (int i = 0; i < height; i++) {
-            for (int k = 0; k < width; k++) {
-                if (nearbyBombs[i][k] != 9){
-                    nearbyBombs[i][k] = check3by3(i,k,nearbyBombs,9);
-                    map[i][k].setText(String.valueOf(nearbyBombs[i][k]));
-                }
-            }
-        }
-
     }
 
     @Override
@@ -163,6 +198,26 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
         System.out.println("Clicked");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == easyMode){
+            width = 8;
+            height = 8;
+            numBombs = 10;
+        }
+        if (e.getSource() == mediumMode){
+            width = 15;
+            height = 12;
+            numBombs = 10;
+        }
+        if (e.getSource() == hardMode){
+            width = 30;
+            height = 16;
+            numBombs = 99;
+        }
+
     }
 
     //----------------------------------Private Helpers-------------------------------//
@@ -212,28 +267,6 @@ public class GameBoard extends JFrame implements MouseListener {
         return count;
     }
 
-    private int getRow(int hashcode){
-        for (int i = 0; i < height; i++){
-            for (int k = 0; k <width; k++){
-                if (map[i][k].hashCode() == hashcode){
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-
-    private int getCol(int hashcode){
-        for (int i = 0; i < height; i++){
-            for (int k = 0; k <width; k++){
-                if (map[i][k].hashCode() == hashcode){
-                    return k;
-                }
-            }
-        }
-        return -1;
-    }
-
     private Image getScaledImage(Image srcImg, int width, int height){
         BufferedImage resizedImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
@@ -247,15 +280,7 @@ public class GameBoard extends JFrame implements MouseListener {
 
     private void generateFrame() {
         //Frame Setting
-        setTitle("Totally Functional Minesweeper Game"); //Name the frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close frame on exit.
-        setVisible(true); //Show frame.
-        setResizable(false);
-        setLayout(new BorderLayout());
         setSize(width * 30, height * 30 + 50);
-        ImageIcon logo = new ImageIcon("bomb.png"); //Create image icon for the logo
-        getContentPane().setBackground(new Color(192, 192, 192)); //set frame color.
-        setIconImage(logo.getImage()); //Change the icon of the frame
 
         //Add a status bar showing the number of flags placed.
         statusBar = new JLabel(String.valueOf(numBombs));
