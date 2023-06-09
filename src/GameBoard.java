@@ -127,6 +127,15 @@
             if (shownFlagNeither[row][col] == 0) {
                 if (nearbyBombs == 9) {
                     System.out.println("BOOM!");
+                    getContentPane().removeAll();
+                    JLabel lose = new JLabel("You Won!");
+                    add(lose, BorderLayout.CENTER);
+                    add(restart, BorderLayout.NORTH);
+                    lose.setVerticalTextPosition(JLabel.CENTER);
+                    lose.setVerticalTextPosition(JLabel.CENTER);
+
+                    revalidate();
+                    repaint();
                 }
                 changeTileImage(map[row][col], nearbyBombs);
                 shownFlagNeither[row][col] = 2;
@@ -140,9 +149,9 @@
                 JLabel win = new JLabel("You Won!");
                 add(win, BorderLayout.CENTER);
                 add(restart, BorderLayout.NORTH);
-                win.setHorizontalTextPosition(Label.CENTER);
-                win.setVerticalTextPosition(Label.CENTER);
-
+                win.setHorizontalTextPosition(JLabel.CENTER);
+                win.setVerticalTextPosition(JLabel.CENTER);
+                win.setHorizontalAlignment(JLabel.CENTER);
                 revalidate();
                 repaint();
             }
