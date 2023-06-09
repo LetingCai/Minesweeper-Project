@@ -104,7 +104,7 @@
                         if (this.nearbyBombs[i][k] != 9){
                             this.nearbyBombs[i][k] = check3by3(i,k,this.nearbyBombs,9);
                         }
-                        map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
+                        //map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
