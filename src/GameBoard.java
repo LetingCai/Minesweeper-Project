@@ -130,6 +130,7 @@
                     add(restart, BorderLayout.NORTH);
                     lose.setVerticalTextPosition(JLabel.CENTER);
                     lose.setVerticalTextPosition(JLabel.CENTER);
+                    lose.setHorizontalAlignment(JLabel.CENTER);
 
                     revalidate();
                     repaint();
