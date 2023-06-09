@@ -104,13 +104,21 @@
                         if (this.nearbyBombs[i][k] != 9){
                             this.nearbyBombs[i][k] = check3by3(i,k,this.nearbyBombs,9);
                         }
-                        map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
+                        //map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
-                            showTile(i,k);
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
                     }
                 }
+
+                for (int i = 0; i < height; i++) {
+                    for (int k = 0; k < width; k++) {
+                        if(shownFlagNeither[i][k] == 2 && this.nearbyBombs[i][k] == 0){
+                            middleClick(i,k);
+                        }
+                    }
+                }
+
             }
 
             if (shownFlagNeither[row][col] == 0) {
@@ -136,7 +144,7 @@
         }
 
         private void middleClick(int row, int col){
-            if (nearbyBombs[row][col] == check3by3(row,col,shownFlagNeither,1)&& shownFlagNeither[row][col] == 2){
+            if (nearbyBombs[row][col] == check3by3(row,col,shownFlagNeither,1) && shownFlagNeither[row][col] == 2){
                 for (int i = row-1; i < row+2; i++){
                     for (int k = col-1; k<col+2; k++){
                         if (i >= 0 && i < height && k >= 0 && k < width && shownFlagNeither[i][k] == 0){
@@ -238,7 +246,7 @@
                     map[row][col].setHorizontalTextPosition(JLabel.CENTER);
                     map[row][col].setVerticalTextPosition(JLabel.CENTER);
 
-                    map[row][col].setText(String.valueOf(this.nearbyBombs[row][col]));
+                    //map[row][col].setText(String.valueOf(this.nearbyBombs[row][col]));
                 }
             }
         }
