@@ -77,8 +77,6 @@
             add(selectDifficulty,BorderLayout.CENTER);
             repaint();
             revalidate();
-
-            initialized = false;
         }
 
         //---------------------------Active Methods----------------------------//
@@ -232,6 +230,7 @@
                 numBombs = 99;
             }
             getContentPane().removeAll();
+            initialized = false;
             map = new JLabel[height][width];
             shownFlagNeither = new int[height][width];
             nearbyBombs = new int[height][width];
