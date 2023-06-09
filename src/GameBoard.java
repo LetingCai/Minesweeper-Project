@@ -128,7 +128,7 @@
                 if (nearbyBombs == 9) {
                     System.out.println("BOOM!");
                     getContentPane().removeAll();
-                    JLabel lose = new JLabel("You Won!");
+                    JLabel lose = new JLabel("You Lost!");
                     add(lose, BorderLayout.CENTER);
                     add(restart, BorderLayout.NORTH);
                     lose.setVerticalTextPosition(JLabel.CENTER);
