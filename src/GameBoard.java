@@ -249,7 +249,7 @@
         private boolean win() {
             for (int r = 0; r < height; r++) {
                 for (int c = 0; c < width; c++) {
-                    if (shownFlagNeither[r][c] == 0 || (shownFlagNeither[r][c] == 1 && nearbyBombs[r][c] != 9)) {
+                    if (shownFlagNeither[r][c] !=2 && nearbyBombs[r][c] != 9) {
                         return false;
                     }
                 }
