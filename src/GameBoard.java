@@ -104,7 +104,7 @@
                         if (this.nearbyBombs[i][k] != 9){
                             this.nearbyBombs[i][k] = check3by3(i,k,this.nearbyBombs,9);
                         }
-                        map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
+                        //map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
@@ -227,6 +227,10 @@
                 width = 30;
                 height = 16;
                 numBombs = 99;
+            }
+            if (e.getSource() == restart){
+                new GameBoard();
+                dispose();
             }
             getContentPane().removeAll();
             initialized = false;
