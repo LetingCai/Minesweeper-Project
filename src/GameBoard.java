@@ -129,7 +129,10 @@
             }
             if (numberOfNonBombs == 0){
                 getContentPane().removeAll();
-                add(new JLabel("You Won"),Label.CENTER);
+                JLabel win = new JLabel("You Won!");
+                add(win, BorderLayout.CENTER);
+                win.setHorizontalTextPosition(Label.CENTER);
+                win.setVerticalTextPosition(Label.CENTER);
                 revalidate();
                 repaint();
             }
@@ -235,7 +238,6 @@
                     if (nearbyBombs[row][col]!=9) {
                         nearbyBombs[row][col] = 1;
                     }
-                    map[row][col].setText(String.valueOf(nearbyBombs[row][col]));
                     map[row][col].setHorizontalTextPosition(JLabel.CENTER);
                     map[row][col].setVerticalTextPosition(JLabel.CENTER);
                 }

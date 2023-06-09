@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class    MainGUIWindow extends JFrame implements ActionListener {
+public class MainGUIWindow extends JFrame implements ActionListener {
     public static void main(String[] args){
         new MainGUIWindow();
     }
