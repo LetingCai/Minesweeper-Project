@@ -29,14 +29,20 @@ public class MainGUIWindow extends JFrame implements ActionListener {
         startingScreen.setVerticalAlignment(JLabel.CENTER);
 
         //Difficulty Buttons
-        JButton easyMode = new JButton("Beginner");
-        JButton mediumMode = new JButton("Intermediate");
-        JButton hardMode = new JButton("Expert");
+        JButton easyMode = new JButton("Easy");
+        JButton mediumMode = new JButton("Medium");
+        JButton hardMode = new JButton("Hard");
 
         //Button Settings
         easyMode.setFocusable(false);
+        easyMode.setSize(50,100);
+        easyMode.addActionListener(e -> {new Grid(1);dispose();});
         mediumMode.setFocusable(false);
+        mediumMode.setSize(50,100);
+        mediumMode.addActionListener(e -> {new Grid(2);dispose();});
         hardMode.setFocusable(false);
+        hardMode.setSize(50,100);
+        hardMode.addActionListener(e -> {new Grid(3);dispose();});
 
         //JPanel to group all the buttons
         JPanel selectDifficulty = new JPanel();
@@ -44,13 +50,11 @@ public class MainGUIWindow extends JFrame implements ActionListener {
         selectDifficulty.add(easyMode);
         selectDifficulty.add(mediumMode);
         selectDifficulty.add(hardMode);
-        selectDifficulty.setSize(100,100);
 
 
         //Adding everything to frame.
         add(startingScreen,BorderLayout.NORTH);
         add(selectDifficulty,BorderLayout.CENTER);
-        repaint();
         revalidate();
     }
 

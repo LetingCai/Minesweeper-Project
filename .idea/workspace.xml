@@ -7,8 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f67e8fa-9e9b-4113-8ff2-526b630b633f" name="Changes" comment="More Improvements">
-      <change beforePath="$PROJECT_DIR$/src/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameBoard.java" afterDir="false" />
+    <list default="true" id="6f67e8fa-9e9b-4113-8ff2-526b630b633f" name="Changes" comment="Final Commit (Plz work)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainGUIWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainGUIWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +89,7 @@
       <recent name="C:\Users\Leo\IdeaProjects\MineSweeperProject\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GameBoard">
+  <component name="RunManager" selected="Application.MainGUIWindow">
     <configuration name="GameBoard" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="GameBoard" />
       <module name="MineSweeperProject" />
@@ -104,8 +106,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GameBoard" />
         <item itemvalue="Application.MainGUIWindow" />
+        <item itemvalue="Application.GameBoard" />
       </list>
     </recent_temporary>
   </component>
@@ -286,7 +288,28 @@
       <option name="project" value="LOCAL" />
       <updated>1686290984147</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Final Commit (Hopefully)">
+      <created>1686291248558</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1686291248558</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Final Commit (Hopefully)">
+      <created>1686291354294</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1686291354294</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Final Commit (Plz work)">
+      <created>1686291390720</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1686291390720</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -303,6 +326,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Draft" />
     <MESSAGE value="More Improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="More Improvements" />
+    <MESSAGE value="Final Commit (Hopefully)" />
+    <MESSAGE value="Final Commit (Plz work)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Commit (Plz work)" />
   </component>
 </project>
