@@ -7,11 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f67e8fa-9e9b-4113-8ff2-526b630b633f" name="Changes" comment="More Improvements">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainGUIWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainGUIWindow.java" afterDir="false" />
-    </list>
+    <list default="true" id="6f67e8fa-9e9b-4113-8ff2-526b630b633f" name="Changes" comment="More Improvements" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -204,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686285341792</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="More Improvements">
+      <created>1686286847727</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1686286847727</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
