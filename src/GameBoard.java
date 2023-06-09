@@ -20,7 +20,6 @@
         private int width;
         private int height;
         private boolean initialized;
-        private int numberOfNonBombs;
 
         //JButtons:
         private final JButton easyMode = new JButton("Beginner");
@@ -105,7 +104,7 @@
                         if (this.nearbyBombs[i][k] != 9){
                             this.nearbyBombs[i][k] = check3by3(i,k,this.nearbyBombs,9);
                         }
-                        //map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
+                        map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
@@ -137,12 +136,11 @@
                 }
                 changeTileImage(map[row][col], nearbyBombs);
                 shownFlagNeither[row][col] = 2;
-                numberOfNonBombs--;
                 if (nearbyBombs == 0) {
                     middleClick(row,col);
                 }
             }
-            if (numberOfNonBombs == 0){
+            if (win()){
                 getContentPane().removeAll();
                 JLabel win = new JLabel("You Won!");
                 add(win, BorderLayout.CENTER);
@@ -235,13 +233,22 @@
             shownFlagNeither = new int[height][width];
             nearbyBombs = new int[height][width];
             board = new JPanel(new GridLayout(height, width));
-            numberOfNonBombs = width * height - numBombs;
             generateBomb(numBombs);
             fillMap();
             generateFrame();
         }
 
         //----------------------------------Private Helpers-------------------------------//
+        private boolean win() {
+            for (int r = 0; r < height; r++) {
+                for (int c = 0; c < width; c++) {
+                    if (shownFlagNeither[r][c] == 0 || (shownFlagNeither[r][c] == 1 && nearbyBombs[r][c] != 9)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
 
         private void changeTileImage(JLabel label, int positionOfImage){
             label.setIcon( new ImageIcon(getScaledImage(img[positionOfImage].getImage(),30,30)));
