@@ -81,7 +81,6 @@
         //---------------------------Active Methods----------------------------//
         private void showTile(int row, int col){
             int nearbyBombs = this.nearbyBombs[row][col];
-
             if (!initialized){
                 System.out.println("Initialized");
                 initialized = true;
@@ -93,7 +92,7 @@
                             if (this.nearbyBombs[i][k] == 9){
                                 this.nearbyBombs[i][k] = 0;
                             }
-                            showTile(i,k);
+                            shownFlagNeither[i][k] = 2;
                         }
                     }
                 }
@@ -107,6 +106,7 @@
                         }
                         map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
+                            showTile(i,k);
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
                     }
@@ -117,15 +117,12 @@
                 if (nearbyBombs == 9) {
                     System.out.println("BOOM!");
                 }
-
                 changeTileImage(map[row][col], nearbyBombs);
                 shownFlagNeither[row][col] = 2;
                 numberOfNonBombs--;
-
                 if (nearbyBombs == 0) {
                     middleClick(row,col);
                 }
-
             }
             if (numberOfNonBombs == 0){
                 getContentPane().removeAll();
@@ -139,10 +136,10 @@
         }
 
         private void middleClick(int row, int col){
-            if (nearbyBombs[row][col] == check3by3(row,col,shownFlagNeither,1) && shownFlagNeither[row][col] == 2){
+            if (nearbyBombs[row][col] == check3by3(row,col,shownFlagNeither,1)&& shownFlagNeither[row][col] == 2){
                 for (int i = row-1; i < row+2; i++){
                     for (int k = col-1; k<col+2; k++){
-                        if (i >= 0 && i < height && k >= 0 && k < width ){
+                        if (i >= 0 && i < height && k >= 0 && k < width && shownFlagNeither[i][k] == 0){
                             showTile(i,k);
                         }
                     }
@@ -236,22 +233,17 @@
                     map[row][col].addMouseListener(this);
                     board.add(map[row][col]);
                     if (nearbyBombs[row][col]!=9) {
-                        nearbyBombs[row][col] = 1;
+                        nearbyBombs[row][col] = check3by3(row,col,nearbyBombs,9);
                     }
                     map[row][col].setHorizontalTextPosition(JLabel.CENTER);
                     map[row][col].setVerticalTextPosition(JLabel.CENTER);
+
+                    map[row][col].setText(String.valueOf(this.nearbyBombs[row][col]));
                 }
             }
         }
 
         private void generateBomb(int num) {
-            if (!initialized) {
-                for (int i = 0; i < height; i++) {
-                    for (int k = 0; k < width; k++) {
-                        shownFlagNeither[i][k] = 0;
-                    }
-                }
-            }
             int i = 0;
             while (i < num) {
                 int row = (int) (Math.random() * height);
