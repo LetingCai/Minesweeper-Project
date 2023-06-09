@@ -104,7 +104,7 @@
                         if (this.nearbyBombs[i][k] != 9){
                             this.nearbyBombs[i][k] = check3by3(i,k,this.nearbyBombs,9);
                         }
-                        //map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
+                        map[i][k].setText(String.valueOf(this.nearbyBombs[i][k]));
                         if (shownFlagNeither[i][k] == 2){
                             changeTileImage(map[i][k],this.nearbyBombs[i][k]);
                         }
@@ -126,6 +126,7 @@
                     System.out.println("BOOM!");
                     getContentPane().removeAll();
                     JLabel lose = new JLabel("You Lost!");
+                    restart.setText("Retry");
                     add(lose, BorderLayout.CENTER);
                     add(restart, BorderLayout.NORTH);
                     lose.setVerticalTextPosition(JLabel.CENTER);
@@ -145,6 +146,7 @@
                 getContentPane().removeAll();
                 JLabel win = new JLabel("You Won!");
                 add(win, BorderLayout.CENTER);
+                restart.setText("Play Again");
                 add(restart, BorderLayout.NORTH);
                 win.setHorizontalTextPosition(JLabel.CENTER);
                 win.setVerticalTextPosition(JLabel.CENTER);
