@@ -26,6 +26,7 @@
         private final JButton easyMode = new JButton("Beginner");
         private final JButton mediumMode = new JButton("Intermediate");
         private final JButton hardMode = new JButton("Expert");
+        private final JButton restart = new JButton("Restart");
 
         //The tiles:
         private JLabel[][] map;
@@ -59,6 +60,8 @@
             mediumMode.addActionListener(this);
             hardMode.setFocusable(false);
             hardMode.addActionListener(this);
+            restart.setFocusable(false);
+            restart.addActionListener(this);
 
             //JPanel to group all the buttons
             JPanel selectDifficulty = new JPanel();
@@ -136,8 +139,10 @@
                 getContentPane().removeAll();
                 JLabel win = new JLabel("You Won!");
                 add(win, BorderLayout.CENTER);
+                add(restart, BorderLayout.NORTH);
                 win.setHorizontalTextPosition(Label.CENTER);
                 win.setVerticalTextPosition(Label.CENTER);
+
                 revalidate();
                 repaint();
             }
@@ -209,7 +214,7 @@
             if (e.getSource() == mediumMode){
                 width = 15;
                 height = 12;
-                numBombs = 10;
+                numBombs = 40;
 
             }
             if (e.getSource() == hardMode){
